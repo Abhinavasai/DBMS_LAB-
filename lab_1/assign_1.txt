@@ -1,0 +1,136 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| university_profile |
+| world              |
++--------------------+
+
+
+
+mysql> select * from student;
++--------+--------+------+------+------+------+--------+--------+
+| name   | rollno | age  | math | sci  | eng  | social | sports |
++--------+--------+------+------+------+------+--------+--------+
+| dwayne |     33 |   21 |   98 |   94 |   91 |     96 |     55 |
+| john   |     58 |   18 |   70 |   87 |   77 |     98 |     67 |
+| dave   |     27 |   22 |   54 |   68 |   98 |     96 |     77 |
+| randy  |     56 |   19 |   69 |   75 |   65 |     67 |     98 |
+| kane   |     11 |   22 |   86 |   95 |   52 |     57 |     73 |
+| tom    |     50 |   21 |   76 |   84 |   62 |     74 |     81 |
++--------+--------+------+------+------+------+--------+--------+
+
+
+
+Q1):
+mysql> select cid from campus where law=true;
++------+
+| cid  |
++------+
+|  101 |
+|  107 |
++------+
+
+Q2):
+mysql> select name,rollno,age,math,sci,sports from student where name = "dave";
++------+--------+------+------+------+--------+
+| name | rollno | age  | math | sci  | sports |
++------+--------+------+------+------+--------+
+| dave |     27 |   22 |   54 |   68 |     77 |
++------+--------+------+------+------+--------+
+
+
+Q3):
+mysql> select name,rollno from student where math>80 or sci>80;
++--------+--------+
+| name   | rollno |
++--------+--------+
+| dwayne |     33 |
+| john   |     58 |
+| kane   |     11 |
+| tom    |     50 |
++--------+--------+
+
+
+Q4):
+mysql> select distinct social from student;
++--------+
+| social |
++--------+
+|     96 |
+|     98 |
+|     67 |
+|     57 |
+|     74 |
++--------+
+
+
+Q5):
+mysql> select count(eng)
+    -> from student
+    -> where eng<70;
++------------+
+| count(eng) |
++------------+
+|          3 |
++------------+
+
+
+Q6):
+mysql> select name,max(math), max(sci) from student;
++--------+-----------+----------+
+| name   | max(math) | max(sci) |
++--------+-----------+----------+
+| dwayne |        98 |       95 |
++--------+-----------+----------+
+
+
+Q7):
+mysql> select loc from campus where engg = false;
++------+
+| loc  |
++------+
+| bom  |
++------+
+
+Q8):
+mysql> select sum(case when engg=true then cap else 0 end)/sum(case when engg=false then cap else 0 end) as ratio   from campus;
++--------+
+| ratio  |
++--------+
+| 2.0000 |
++--------+
+
+
+Q9):
+mysql> select name from student where math>70 and sci>70 and eng>70 and social>70 and sports>70;
+Empty set (0.00 sec)
+
+
+Q10):
+mysql> select
+    -> case
+    ->  when rollno>0 and rollno<=20
+    -> then '1-20'
+    ->  when rollno>20 and rollno<=40 then '21-40'
+    -> when rollno>40 and rollno<=60 then '41-60'
+    -> else 'out_of_range' end as `Range`,
+    -> count(1) as `Count`
+    -> from student group by `Range`;
++-------+-------+
+| Range | Count |
++-------+-------+
+| 1-20  |     1 |
+| 21-40 |     2 |
+| 41-60 |     3 |
++-------+-------+
+
+
+
+*******************************************************END***************************************************************
+
