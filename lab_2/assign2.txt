@@ -1,0 +1,92 @@
+1
+mysql>  select name, rollno, (year(curdate())-year(dob)) as age from student where (year(curdate())-year(dob)) >=18 order by age desc;
++---------+--------+------+
+| name    | rollno | age  |
++---------+--------+------+
+| dave    |     27 |   22 |
+| kane    |     11 |   22 |
+| dwayne  |     33 |   21 |
+| tom     |     50 |   21 |
+| carol   |      7 |   21 |
+| jean    |     46 |   21 |
+| randy   |     56 |   20 |
+| wanda   |     21 |   20 |
+| natasha |     52 |   20 |
+| gamora  |     34 |   20 |
+| john    |     58 |   19 |
++---------+--------+------+
+11 rows in set (0.00 sec)
+
+
+
+2
+mysql> select count(*) as male_count from student where gender = "M" and (year(curdate())-year(dob))>=20 ;select count(*) as female_count from student where gender = "F" and (year(curdate())-year(dob))>=20 ;
++------------+
+| male_count |
++------------+
+|          5 |
++------------+
+1 row in set (0.00 sec)
+
++--------------+
+| female_count |
++--------------+
+|            5 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+3
+mysql> select count(name) as count from student where math>(select avg((math+sci+eng+social+sports)/5) from student);
++-------+
+| count |
++-------+
+|     5 |
++-------+
+1 row in set (0.00 sec)
+
+
+4
+mysql> select sum(case when pincode>=500000 and pincode<700000 then cap else 0 end)/sum(case when pincode>=300000 and pincode<500000 then cap else 0 end) as ratio from campus;
++--------+
+| ratio  |
++--------+
+| 1.6250 |
++--------+
+1 row in set (0.00 sec)
+
+
+5
+mysql> select name,((math+sci+eng+social+sports)/5) as average from student order by average desc limit 1,1;
++------+---------+
+| name | average |
++------+---------+
+| jean | 87.6000 |
++------+---------+
+1 row in set (0.00 sec)
+
+
+6
+mysql> select name, rollno,(math+sci+eng+social+sports)/5 as avg_marks ,if(((math+sci+eng+social+sports)/5)>(select avg((math+sci+eng+social+sports)/5)  from student),"High","Low") as classification from student;
++---------+--------+-----------+----------------+
+| name    | rollno | avg_marks | classification |
++---------+--------+-----------+----------------+
+| dwayne  |     33 |   86.8000 | High           |
+| john    |     58 |   79.8000 | High           |
+| dave    |     27 |   78.6000 | Low            |
+| randy   |     56 |   74.8000 | Low            |
+| kane    |     11 |   72.6000 | Low            |
+| tom     |     50 |   75.4000 | Low            |
+| carol   |      7 |   73.2000 | Low            |
+| wanda   |     21 |   60.4000 | Low            |
+| natasha |     52 |   89.6000 | High           |
+| gamora  |     34 |   87.0000 | High           |
+| jean    |     46 |   87.6000 | High           |
++---------+--------+-----------+----------------+
+11 rows in set (0.00 sec)
+
+
+
