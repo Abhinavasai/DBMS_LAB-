@@ -11,7 +11,7 @@ class sqlhandler:
             connection = mysql.connector.connect(host='localhost',
                                                  database='UserDB',
                                                  user='root',
-                                                 password='Nikhil2202#')
+                                                 password='Abhinav1#')
             if connection.is_connected():
                 db_Info = connection.get_server_info()
                 cursor = connection.cursor(buffered=True)
