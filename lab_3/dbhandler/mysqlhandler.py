@@ -1,10 +1,9 @@
 import mysql.connector
 
-class mysqlhandler:
-    def __init__(self):
-        pass;
-    def myfunc(self):
-
+class sqlhandler:
+    
+    def myfunc(data,f):
+        
         from mysql.connector import Error
 
 
@@ -12,51 +11,51 @@ class mysqlhandler:
             connection = mysql.connector.connect(host='localhost',
                                                  database='UserDB',
                                                  user='root',
-                                                 password='Abhinav1#')
+                                                 password='Nikhil2202#')
             if connection.is_connected():
                 db_Info = connection.get_server_info()
                 cursor = connection.cursor(buffered=True)
                 cursor.execute("select database();")
 
 
-                def display_table() :
+                def display_table(data) :
                     query= ("select * from user_data")
                     cursor.execute(query)
                     for rows in cursor:
                         print(rows)
 
-                def add_user() :
-                    na=input("Enter the user name : ")
-                    ph=input("Enter the user phone number : ")
-                    do=input("Enter the user dob :")
+                def add_user(data) :
+                    na=data["name"]
+                    ph=data["phno"]
+                    do=data["dob"]
                     query=("insert into user_data(name,phno,dob)" "values(%s,%s,%s)");
                     data=(na,ph,do)
                     cursor.execute(query,data)
                     connection.commit()
 
-                def delete_user() :
-                    na=input("Enter name of the user to delete : ")
+                def delete_user(data) :
+                    na=data["name"]
                     query=("delete from user_data where name='%s' "%(na));
                     cursor.execute(query)
                     connection.commit()
 
-                def update_user() :
-                    na=input("Enter the user's name whose details you want to update :")
-                    field=input("Enter the field you want to update :")
-                    value=input("The value you want to update the field with :")
+                def update_user(data) :
+                    na=data["name"]
+                    field=data["field"]
+                    value=data["value"]
                     query=("update user_data set %s='%s' where name='%s' " %(field,value,na))
                     cursor.execute(query)
                     connection.commit()
 
-                f=int(input(" Enter 1 for displaying user \n Enter 2 for adding user \n Enter 3 for updating user \n Enter 4 for deleting data \n"))
+                
                 if f==1 :
-                    display_table()
+                    display_table(data)
                 elif f==2 :
-                    add_user()
+                    add_user(data)
                 elif f==3 :
-                    display_users()
+                    update_users(data)
                 elif f==4 :
-                    delete_user()
+                    delete_user(data)
                 else :
                     print("Wrong Format") 
 
